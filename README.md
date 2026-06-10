@@ -59,38 +59,3 @@ France: 12.81%
 Brazil: 11.04%
 ...
 ```
-
-**Re-fit the model** from raw results data:
-
-```bash
-python buildTeams.py
-```
-
-Regenerates `teams.json` and `modelConfig.json` from `114/results.csv`. Takes ~5 seconds.
-
-## Groups
-
-| Group | Teams |
-|-------|-------|
-| A | Mexico, South Africa, South Korea, Czech Republic |
-| B | Canada, Bosnia and Herzegovina, Qatar, Switzerland |
-| C | Brazil, Morocco, Haiti, Scotland |
-| D | United States, Paraguay, Australia, Turkey |
-| E | Germany, Curaçao, Ivory Coast, Ecuador |
-| F | Netherlands, Japan, Sweden, Tunisia |
-| G | Belgium, Egypt, Iran, New Zealand |
-| H | Spain, Cape Verde, Saudi Arabia, Uruguay |
-| I | France, Senegal, Iraq, Norway |
-| J | Argentina, Algeria, Austria, Jordan |
-| K | Portugal, DR Congo, Uzbekistan, Colombia |
-| L | England, Croatia, Ghana, Panama |
-
-Host nations (USA, Canada, Mexico) receive a home-advantage multiplier in all their matches.
-
-## Qualification format
-
-- Top 2 from each of the 12 groups qualify automatically (24 teams).
-- Best 8 third-place teams across all groups also advance.
-- Total: 32 teams enter the knockout stage.
-
-Knockout seeding: group winners (seeds 1–12) vs. runners-up (13–24) vs. best third-place (25–32). Seed *k* faces seed *33−k* in the Round of 32, with conflict avoidance for same-group opponents.
