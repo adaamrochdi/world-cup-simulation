@@ -4,14 +4,14 @@ from itertools import combinations, groupby
 from matchEngine import simulateMatch
 
 
-def _buildGroupMap(teams):
+def buildGroupMap(teams):
     groups = {}
     for team in teams:
         groups.setdefault(team["group"], []).append(team)
     return groups
 
 
-def _simulateGroup(groupTeams):
+def simulateGroup(groupTeams):
     names = [t["name"] for t in groupTeams]
     stats = {name: {"pts": 0, "gd": 0, "gf": 0} for name in names}
     h2h = {
@@ -42,10 +42,10 @@ def _simulateGroup(groupTeams):
             h2h[hn][an]["pts"] += 1
             h2h[an][hn]["pts"] += 1
 
-    return _rankGroup(names, stats, h2h), stats
+    return rankGroup(names, stats, h2h), stats
 
 
-def _rankGroup(names, stats, h2h):
+def rankGroup(names, stats, h2h):
     def primaryKey(name):
         s = stats[name]
         return (-s["pts"], -s["gd"], -s["gf"])
@@ -65,12 +65,12 @@ def _rankGroup(names, stats, h2h):
 
 
 def simulateGroupStage(teams):
-    groups = _buildGroupMap(teams)
+    groups = buildGroupMap(teams)
     groupResults = {}
     allStats = {}
 
     for groupLetter in sorted(groups):
-        ranked, stats = _simulateGroup(groups[groupLetter])
+        ranked, stats = simulateGroup(groups[groupLetter])
         groupResults[groupLetter] = ranked
         allStats.update(stats)
 
@@ -107,14 +107,3 @@ def simulateGroupStage(teams):
         "stats": allStats,
     }
 
-
-if __name__ == "__main__":
-    with open("teams.json") as f:
-        teams = json.load(f)
-    result = simulateGroupStage(teams)
-    print("Third-place qualifiers (8):", result["thirdPlace"])
-    print("\nGroup standings:")
-    for g, rows in result["standings"].items():
-        print(f"  Group {g}:")
-        for r in rows:
-            print(f"    {r['rank']}. {r['name']:30s} pts={r['pts']} gd={r['gd']:+d} gf={r['gf']}")
