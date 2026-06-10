@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict, Counter
 import pandas as pd
 from joblib import Parallel, delayed
 from groupStage import simulateGroupStage
@@ -6,30 +7,31 @@ from knockoutStage import simulateKnockoutStage
 
 N_SIMULATIONS = 100_000
 STAGE_ORDER = ["group_stage", "round_of_32", "round_of_16", "quarter_final", "semi_final", "final", "champion"]
-ROUND_LABELS = {"round_of_32", "round_of_16", "quarter_final", "semi_final", "final"}
+KNOCKOUT_ROUNDS = STAGE_ORDER[1:-1]
+ROUND_LABELS = {
+    "round_of_32": "R32", "round_of_16": "R16", "quarter_final": "QF",
+    "semi_final": "SF", "final": "Final", "third_place": "3rd Place",
+}
+ROUND_ORDER = ["round_of_32", "round_of_16", "quarter_final", "semi_final", "final", "third_place"]
 
 
 def _runSimulation(teams):
     gsResult = simulateGroupStage(teams)
-
-    if "Morocco" not in gsResult["qualified"]:
-        return {"stage": "group_stage", "path": []}
-
     ksResult = simulateKnockoutStage(gsResult, teams)
     moroccoPath = ksResult["moroccoPath"]
 
     stage = "group_stage"
-    for entry in moroccoPath:
-        if entry["round"] == "third_place":
-            continue
-        stage = entry["round"]
-        if entry["result"] == "loss":
-            break
+    if "Morocco" in gsResult["qualified"]:
+        for entry in moroccoPath:
+            if entry["round"] == "third_place":
+                continue
+            stage = entry["round"]
+            if entry["result"] == "loss":
+                break
+        if stage == "final" and ksResult["winner"] == "Morocco":
+            stage = "champion"
 
-    if stage == "final" and ksResult["winner"] == "Morocco":
-        stage = "champion"
-
-    return {"stage": stage, "path": moroccoPath, "winner": ksResult["winner"]}
+    return {"stage": stage, "path": moroccoPath, "winner": ksResult["winner"], "allMatches": ksResult["allMatches"]}
 
 
 def _extractOpponents(path):
@@ -73,7 +75,7 @@ def _buildSummary(df, teams, total):
     lines.append("")
 
     lines.append("TOP OPPONENTS PER KNOCKOUT ROUND (% of all simulations)")
-    for rnd in ["round_of_32", "round_of_16", "quarter_final", "semi_final", "final"]:
+    for rnd in KNOCKOUT_ROUNDS:
         if rnd not in df.columns:
             continue
         col = df[rnd].dropna()
@@ -106,6 +108,62 @@ def _buildSummary(df, teams, total):
     return "\n".join(lines)
 
 
+def exportBracket(bracketData, outPath="bracket_results.md"):
+    h2hWins = Counter()
+    for slots in bracketData.values():
+        for slot in slots.values():
+            for (winner, loser), count in slot.items():
+                h2hWins[(winner, loser)] += count
+
+    def favored(a, b):
+        wa, wb = h2hWins[(a, b)], h2hWins[(b, a)]
+        if wa + wb == 0:
+            return a, b, 0.5
+        if wb > wa:
+            a, b, wa, wb = b, a, wb, wa
+        return a, b, wa / (wa + wb)
+
+    used = set()
+    pairs = []
+    r32 = bracketData["round_of_32"]
+    for slotIdx in sorted(r32):
+        pairCounts = Counter()
+        for (winner, loser), count in r32[slotIdx].items():
+            pairCounts[frozenset({winner, loser})] += count
+        fresh = [p for p in pairCounts if not (set(p) & used)]
+        best = max(fresh or pairCounts, key=pairCounts.__getitem__)
+        used.update(best)
+        pairs.append(tuple(sorted(best)))
+
+    lines = ["# 2026 FIFA World Cup — Bracket Results", ""]
+    sfWinners, sfLosers, champion = [], [], None
+    for roundName in ROUND_ORDER:
+        if roundName == "final":
+            pairs = [tuple(sfWinners)]
+        elif roundName == "third_place":
+            pairs = [tuple(sfLosers)]
+        lines.append(f"## {ROUND_LABELS[roundName]}")
+        winners, losers = [], []
+        for a, b in pairs:
+            w, l, p = favored(a, b)
+            winners.append(w)
+            losers.append(l)
+            lines.append(f"**{w}** {p*100:.0f}% — {l} {(1-p)*100:.0f}%")
+        lines.append("")
+        if roundName == "semi_final":
+            sfWinners, sfLosers = winners, losers
+        elif roundName == "final":
+            champion = winners[0]
+        pairs = list(zip(winners[::2], winners[1::2]))
+
+    lines.append("## Champion")
+    lines.append(champion)
+
+    with open(outPath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    print(f"Bracket results written to {outPath}")
+
+
 def main():
     with open("teams.json") as f:
         teams = json.load(f)
@@ -117,57 +175,28 @@ def main():
     rows = []
     for r in results:
         opponents = _extractOpponents(r["path"])
-        pathStr = " → ".join(
+        pathStr = " -> ".join(
             f"{e['round']}({e['opponent']})"
             for e in r["path"]
-            if e["round"] != "third_place" and (e["result"] == "win" or r["stage"] != "champion")
+            if e["round"] != "third_place"
         )
         rows.append({"stage": r["stage"], "path": pathStr, "winner": r.get("winner"), **opponents})
 
     df = pd.DataFrame(rows)
     df.to_parquet("results.parquet", index=False)
 
-    total = len(df)
-    print("=== Morocco Stage Probabilities ===")
-    reachedOrBetter = {}
-    for s in STAGE_ORDER:
-        count = (df["stage"] == s).sum()
-        reachedOrBetter[s] = count
-    cumulative = 0
-    for s in reversed(STAGE_ORDER):
-        cumulative += reachedOrBetter.get(s, 0)
-        pct = cumulative / total * 100
-        label = s.replace("_", " ").title()
-        print(f"  Reach {label:20s}: {pct:6.2f}%")
-
-    print("\n=== Top 5 Opponents per Knockout Round ===")
-    for rnd in ["round_of_32", "round_of_16", "quarter_final", "semi_final", "final"]:
-        if rnd not in df.columns:
-            continue
-        col = df[rnd].dropna()
-        if col.empty:
-            continue
-        top5 = col.value_counts().head(5)
-        label = rnd.replace("_", " ").title()
-        print(f"\n  {label}:")
-        for opp, cnt in top5.items():
-            print(f"    {opp:30s} {cnt / total * 100:.2f}%")
-
-    print("\n=== Top 10 Tournament Winners ===")
-    if "winner" in df.columns:
-        winnerCounts = df["winner"].dropna().value_counts().head(10)
-        for team, cnt in winnerCounts.items():
-            print(f"  {team:30s} {cnt / total * 100:.2f}%")
-
-    print("\n=== Top 10 Most Frequent Full Paths ===")
-    pathCounts = df["path"].value_counts().head(10)
-    for path, cnt in pathCounts.items():
-        print(f"  {cnt / total * 100:.2f}%  {path}")
-
-    summary = _buildSummary(df, teams, total)
+    summary = _buildSummary(df, teams, len(df))
+    print(summary)
     with open("morocco_summary.txt", "w", encoding="utf-8") as f:
         f.write(summary)
-    print("\n→ Full summary written to morocco_summary.txt")
+    print("\nFull summary written to morocco_summary.txt")
+
+    bracketData = defaultdict(lambda: defaultdict(Counter))
+    for r in results:
+        for roundName, matches in r.get("allMatches", {}).items():
+            for slotIdx, (winner, loser) in enumerate(matches):
+                bracketData[roundName][slotIdx][(winner, loser)] += 1
+    exportBracket(bracketData)
 
 
 if __name__ == "__main__":

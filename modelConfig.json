@@ -1,9 +1,5 @@
 {
-  "baseGoals": 1.14043,
-  "homeAdvantage": 1.36503,
-  "rho": -0.02315,
-  "halfLifeDays": 540.0,
-  "kappaOverall": 35.0,
-  "kappaBalance": 6.0,
-  "eloPriorScale": 0.3
+  "baseGoals": 1.13944,
+  "homeAdvantage": 1.36578,
+  "rho": -0.02341
 }

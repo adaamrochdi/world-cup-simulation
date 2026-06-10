@@ -4,383 +4,383 @@
     "group": "A",
     "hostBonus": true,
     "eloRating": 1875,
-    "attackStrength": 1.1286,
-    "defenseStrength": 1.5898
+    "attackStrength": 1.1274,
+    "defenseStrength": 1.5864
   },
   {
     "name": "South Africa",
     "group": "A",
     "hostBonus": false,
     "eloRating": 1518,
-    "attackStrength": 0.924,
-    "defenseStrength": 0.9563
+    "attackStrength": 0.9222,
+    "defenseStrength": 0.9556
   },
   {
     "name": "South Korea",
     "group": "A",
     "hostBonus": false,
     "eloRating": 1758,
-    "attackStrength": 1.3713,
-    "defenseStrength": 1.1934
+    "attackStrength": 1.3696,
+    "defenseStrength": 1.1931
   },
   {
     "name": "Czech Republic",
     "group": "A",
     "hostBonus": false,
     "eloRating": 1740,
-    "attackStrength": 1.2364,
-    "defenseStrength": 1.0493
+    "attackStrength": 1.2361,
+    "defenseStrength": 1.0495
   },
   {
     "name": "Canada",
     "group": "B",
     "hostBonus": true,
     "eloRating": 1793,
-    "attackStrength": 1.1711,
-    "defenseStrength": 1.3714
+    "attackStrength": 1.1594,
+    "defenseStrength": 1.3617
   },
   {
     "name": "Bosnia and Herzegovina",
     "group": "B",
     "hostBonus": false,
     "eloRating": 1591,
-    "attackStrength": 0.8315,
-    "defenseStrength": 0.8916
+    "attackStrength": 0.8311,
+    "defenseStrength": 0.8901
   },
   {
     "name": "Qatar",
     "group": "B",
     "hostBonus": false,
     "eloRating": 1423,
-    "attackStrength": 0.8839,
-    "defenseStrength": 0.7043
+    "attackStrength": 0.884,
+    "defenseStrength": 0.7049
   },
   {
     "name": "Switzerland",
     "group": "B",
     "hostBonus": false,
     "eloRating": 1894,
-    "attackStrength": 1.4977,
-    "defenseStrength": 1.3497
+    "attackStrength": 1.4985,
+    "defenseStrength": 1.349
   },
   {
     "name": "Brazil",
     "group": "C",
     "hostBonus": false,
     "eloRating": 1988,
-    "attackStrength": 1.5909,
-    "defenseStrength": 1.6353
+    "attackStrength": 1.5875,
+    "defenseStrength": 1.6347
   },
   {
     "name": "Morocco",
     "group": "C",
     "hostBonus": false,
     "eloRating": 1824,
-    "attackStrength": 1.474,
-    "defenseStrength": 1.8084
+    "attackStrength": 1.4724,
+    "defenseStrength": 1.8112
   },
   {
     "name": "Haiti",
     "group": "C",
     "hostBonus": false,
     "eloRating": 1554,
-    "attackStrength": 1.1944,
-    "defenseStrength": 0.8499
+    "attackStrength": 1.1797,
+    "defenseStrength": 0.8417
   },
   {
     "name": "Scotland",
     "group": "C",
     "hostBonus": false,
     "eloRating": 1770,
-    "attackStrength": 1.1718,
-    "defenseStrength": 1.1551
+    "attackStrength": 1.1665,
+    "defenseStrength": 1.1524
   },
   {
     "name": "United States",
     "group": "D",
     "hostBonus": true,
     "eloRating": 1733,
-    "attackStrength": 1.253,
-    "defenseStrength": 1.0579
+    "attackStrength": 1.2484,
+    "defenseStrength": 1.0562
   },
   {
     "name": "Paraguay",
     "group": "D",
     "hostBonus": false,
     "eloRating": 1833,
-    "attackStrength": 0.951,
-    "defenseStrength": 1.4811
+    "attackStrength": 0.9504,
+    "defenseStrength": 1.4757
   },
   {
     "name": "Australia",
     "group": "D",
     "hostBonus": false,
     "eloRating": 1774,
-    "attackStrength": 1.2617,
-    "defenseStrength": 1.3812
+    "attackStrength": 1.2586,
+    "defenseStrength": 1.3782
   },
   {
     "name": "Turkey",
     "group": "D",
     "hostBonus": false,
     "eloRating": 1906,
-    "attackStrength": 1.5539,
-    "defenseStrength": 1.2324
+    "attackStrength": 1.5551,
+    "defenseStrength": 1.2317
   },
   {
     "name": "Germany",
     "group": "E",
     "hostBonus": false,
     "eloRating": 1925,
-    "attackStrength": 1.8368,
-    "defenseStrength": 1.3398
+    "attackStrength": 1.8363,
+    "defenseStrength": 1.3397
   },
   {
     "name": "Curacao",
     "group": "E",
     "hostBonus": false,
     "eloRating": 1433,
-    "attackStrength": 0.5425,
-    "defenseStrength": 0.5425
+    "attackStrength": 0.9326,
+    "defenseStrength": 0.8636
   },
   {
     "name": "Ivory Coast",
     "group": "E",
     "hostBonus": false,
     "eloRating": 1695,
-    "attackStrength": 1.1652,
-    "defenseStrength": 1.3366
+    "attackStrength": 1.1646,
+    "defenseStrength": 1.336
   },
   {
     "name": "Ecuador",
     "group": "E",
     "hostBonus": false,
     "eloRating": 1935,
-    "attackStrength": 0.9228,
-    "defenseStrength": 2.2031
+    "attackStrength": 0.9219,
+    "defenseStrength": 2.1968
   },
   {
     "name": "Netherlands",
     "group": "F",
     "hostBonus": false,
     "eloRating": 1944,
-    "attackStrength": 1.8442,
-    "defenseStrength": 1.402
+    "attackStrength": 1.8402,
+    "defenseStrength": 1.4
   },
   {
     "name": "Japan",
     "group": "F",
     "hostBonus": false,
     "eloRating": 1906,
-    "attackStrength": 1.8053,
-    "defenseStrength": 1.5943
+    "attackStrength": 1.8049,
+    "defenseStrength": 1.5922
   },
   {
     "name": "Sweden",
     "group": "F",
     "hostBonus": false,
     "eloRating": 1712,
-    "attackStrength": 1.2641,
-    "defenseStrength": 0.9091
+    "attackStrength": 1.2648,
+    "defenseStrength": 0.9088
   },
   {
     "name": "Tunisia",
     "group": "F",
     "hostBonus": false,
     "eloRating": 1633,
-    "attackStrength": 1.0053,
-    "defenseStrength": 1.3026
+    "attackStrength": 1.0047,
+    "defenseStrength": 1.301
   },
   {
     "name": "Belgium",
     "group": "G",
     "hostBonus": false,
     "eloRating": 1888,
-    "attackStrength": 1.6064,
-    "defenseStrength": 1.3673
+    "attackStrength": 1.6069,
+    "defenseStrength": 1.3674
   },
   {
     "name": "Egypt",
     "group": "G",
     "hostBonus": false,
     "eloRating": 1699,
-    "attackStrength": 0.9876,
-    "defenseStrength": 1.4785
+    "attackStrength": 0.9869,
+    "defenseStrength": 1.4783
   },
   {
     "name": "Iran",
     "group": "G",
     "hostBonus": false,
     "eloRating": 1772,
-    "attackStrength": 1.3523,
-    "defenseStrength": 1.2068
+    "attackStrength": 1.3527,
+    "defenseStrength": 1.2052
   },
   {
     "name": "New Zealand",
     "group": "G",
     "hostBonus": false,
     "eloRating": 1563,
-    "attackStrength": 1.389,
-    "defenseStrength": 0.874
+    "attackStrength": 1.3917,
+    "defenseStrength": 0.8757
   },
   {
     "name": "Spain",
     "group": "H",
     "hostBonus": false,
     "eloRating": 2155,
-    "attackStrength": 2.1965,
-    "defenseStrength": 1.9694
+    "attackStrength": 2.1998,
+    "defenseStrength": 1.9683
   },
   {
     "name": "Cape Verde",
     "group": "H",
     "hostBonus": false,
     "eloRating": 1576,
-    "attackStrength": 0.8535,
-    "defenseStrength": 0.9811
+    "attackStrength": 0.8531,
+    "defenseStrength": 0.9818
   },
   {
     "name": "Saudi Arabia",
     "group": "H",
     "hostBonus": false,
     "eloRating": 1566,
-    "attackStrength": 0.7936,
-    "defenseStrength": 1.1812
+    "attackStrength": 0.7926,
+    "defenseStrength": 1.1803
   },
   {
     "name": "Uruguay",
     "group": "H",
     "hostBonus": false,
     "eloRating": 1892,
-    "attackStrength": 1.0722,
-    "defenseStrength": 1.7923
+    "attackStrength": 1.0712,
+    "defenseStrength": 1.7868
   },
   {
     "name": "France",
     "group": "I",
     "hostBonus": false,
     "eloRating": 2062,
-    "attackStrength": 1.7759,
-    "defenseStrength": 1.849
+    "attackStrength": 1.7753,
+    "defenseStrength": 1.8477
   },
   {
     "name": "Senegal",
     "group": "I",
     "hostBonus": false,
     "eloRating": 1867,
-    "attackStrength": 1.4982,
-    "defenseStrength": 1.5672
+    "attackStrength": 1.4996,
+    "defenseStrength": 1.5694
   },
   {
     "name": "Iraq",
     "group": "I",
     "hostBonus": false,
     "eloRating": 1618,
-    "attackStrength": 0.8372,
-    "defenseStrength": 1.2173
+    "attackStrength": 0.8374,
+    "defenseStrength": 1.2171
   },
   {
     "name": "Norway",
     "group": "I",
     "hostBonus": false,
     "eloRating": 1917,
-    "attackStrength": 1.8886,
-    "defenseStrength": 1.2975
+    "attackStrength": 1.8909,
+    "defenseStrength": 1.2969
   },
   {
     "name": "Argentina",
     "group": "J",
     "hostBonus": false,
     "eloRating": 2113,
-    "attackStrength": 1.757,
-    "defenseStrength": 2.2741
+    "attackStrength": 1.7505,
+    "defenseStrength": 2.2708
   },
   {
     "name": "Algeria",
     "group": "J",
     "hostBonus": false,
     "eloRating": 1760,
-    "attackStrength": 1.4421,
-    "defenseStrength": 1.3004
+    "attackStrength": 1.4452,
+    "defenseStrength": 1.3006
   },
   {
     "name": "Austria",
     "group": "J",
     "hostBonus": false,
     "eloRating": 1830,
-    "attackStrength": 1.3602,
-    "defenseStrength": 1.3354
+    "attackStrength": 1.3621,
+    "defenseStrength": 1.335
   },
   {
     "name": "Jordan",
     "group": "J",
     "hostBonus": false,
     "eloRating": 1685,
-    "attackStrength": 1.2351,
-    "defenseStrength": 1.0247
+    "attackStrength": 1.2352,
+    "defenseStrength": 1.0242
   },
   {
     "name": "Portugal",
     "group": "K",
     "hostBonus": false,
     "eloRating": 1984,
-    "attackStrength": 1.8777,
-    "defenseStrength": 1.554
+    "attackStrength": 1.875,
+    "defenseStrength": 1.5515
   },
   {
     "name": "DR Congo",
     "group": "K",
     "hostBonus": false,
     "eloRating": 1661,
-    "attackStrength": 0.8739,
-    "defenseStrength": 1.4859
+    "attackStrength": 0.8719,
+    "defenseStrength": 1.4851
   },
   {
     "name": "Uzbekistan",
     "group": "K",
     "hostBonus": false,
     "eloRating": 1718,
-    "attackStrength": 0.9557,
-    "defenseStrength": 1.3162
+    "attackStrength": 0.9577,
+    "defenseStrength": 1.3137
   },
   {
     "name": "Colombia",
     "group": "K",
     "hostBonus": false,
     "eloRating": 1977,
-    "attackStrength": 1.6316,
-    "defenseStrength": 1.534
+    "attackStrength": 1.6276,
+    "defenseStrength": 1.5332
   },
   {
     "name": "England",
     "group": "L",
     "hostBonus": false,
     "eloRating": 2020,
-    "attackStrength": 1.7398,
-    "defenseStrength": 1.9903
+    "attackStrength": 1.7384,
+    "defenseStrength": 1.9914
   },
   {
     "name": "Croatia",
     "group": "L",
     "hostBonus": false,
     "eloRating": 1908,
-    "attackStrength": 1.4534,
-    "defenseStrength": 1.5248
+    "attackStrength": 1.4539,
+    "defenseStrength": 1.5252
   },
   {
     "name": "Ghana",
     "group": "L",
     "hostBonus": false,
     "eloRating": 1510,
-    "attackStrength": 0.8476,
-    "defenseStrength": 0.9346
+    "attackStrength": 0.8467,
+    "defenseStrength": 0.9336
   },
   {
     "name": "Panama",
     "group": "L",
     "hostBonus": false,
     "eloRating": 1734,
-    "attackStrength": 1.2645,
-    "defenseStrength": 1.0835
+    "attackStrength": 1.2564,
+    "defenseStrength": 1.0779
   }
 ]

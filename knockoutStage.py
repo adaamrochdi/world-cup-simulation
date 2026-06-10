@@ -17,9 +17,9 @@ def _groupOf(name, groupResults):
 
 def _seedTeams(groupResults, thirdPlace):
     groups = sorted(groupResults.keys())
-    winners = [groupResults[g][0] for g in groups]      # seeds 1-12
-    runnersUp = [groupResults[g][1] for g in groups]    # seeds 13-24
-    return winners + runnersUp + list(thirdPlace)        # seeds 25-32
+    winners = [groupResults[g][0] for g in groups]
+    runnersUp = [groupResults[g][1] for g in groups]
+    return winners + runnersUp + list(thirdPlace)
 
 
 def _buildR32Pairs(seeds, groupResults):
@@ -38,10 +38,11 @@ def _buildR32Pairs(seeds, groupResults):
 
 
 def _playRound(pairs, teamMap, roundName, moroccoPath):
-    winners = []
+    winners, losers, matches = [], [], []
     for homeN, awayN in pairs:
         hg, ag = simulateMatch(teamMap[homeN], teamMap[awayN], knockout=True)
-        winner = homeN if hg > ag else awayN
+        winner, loser = (homeN, awayN) if hg > ag else (awayN, homeN)
+        matches.append((winner, loser))
 
         if MOROCCO in (homeN, awayN):
             moroccoPath.append({
@@ -53,7 +54,12 @@ def _playRound(pairs, teamMap, roundName, moroccoPath):
             })
 
         winners.append(winner)
-    return winners
+        losers.append(loser)
+    return winners, losers, matches
+
+
+def _nextRoundPairs(winners):
+    return list(zip(winners[::2], winners[1::2]))
 
 
 def simulateKnockoutStage(groupStageResult, teams):
@@ -62,33 +68,22 @@ def simulateKnockoutStage(groupStageResult, teams):
     thirdPlace = groupStageResult["thirdPlace"]
 
     seeds = _seedTeams(groupResults, thirdPlace)
-    r32Pairs = _buildR32Pairs(seeds, groupResults)
+    pairs = _buildR32Pairs(seeds, groupResults)
 
     moroccoPath = []
+    allMatches = {}
 
-    # Round of 32: 32 → 16
-    r32Winners = _playRound(r32Pairs, teamMap, "round_of_32", moroccoPath)
-
-    # Round of 16: 16 → 8
-    r16Pairs = [(r32Winners[i], r32Winners[i + 1]) for i in range(0, len(r32Winners), 2)]
-    r16Winners = _playRound(r16Pairs, teamMap, "round_of_16", moroccoPath)
-
-    # Quarter-finals: 8 → 4
-    qfPairs = [(r16Winners[i], r16Winners[i + 1]) for i in range(0, len(r16Winners), 2)]
-    qfWinners = _playRound(qfPairs, teamMap, "quarter_final", moroccoPath)
-
-    # Semi-finals: 4 → 2
-    sfPairs = [(qfWinners[0], qfWinners[1]), (qfWinners[2], qfWinners[3])]
-    sfWinners = _playRound(sfPairs, teamMap, "semi_final", moroccoPath)
-    sfLosers = [sfPairs[i][1] if sfWinners[i] == sfPairs[i][0] else sfPairs[i][0] for i in range(2)]
-
-    # Championship final + 3rd-place match
-    champWinners = _playRound([(sfWinners[0], sfWinners[1])], teamMap, "final", moroccoPath)
-    _playRound([(sfLosers[0], sfLosers[1])], teamMap, "third_place", moroccoPath)
+    winners, _, allMatches["round_of_32"] = _playRound(pairs, teamMap, "round_of_32", moroccoPath)
+    winners, _, allMatches["round_of_16"] = _playRound(_nextRoundPairs(winners), teamMap, "round_of_16", moroccoPath)
+    winners, _, allMatches["quarter_final"] = _playRound(_nextRoundPairs(winners), teamMap, "quarter_final", moroccoPath)
+    finalists, sfLosers, allMatches["semi_final"] = _playRound(_nextRoundPairs(winners), teamMap, "semi_final", moroccoPath)
+    champion, _, allMatches["final"] = _playRound([tuple(finalists)], teamMap, "final", moroccoPath)
+    _, _, allMatches["third_place"] = _playRound([tuple(sfLosers)], teamMap, "third_place", moroccoPath)
 
     return {
-        "winner": champWinners[0],
+        "winner": champion[0],
         "moroccoPath": moroccoPath,
+        "allMatches": allMatches,
     }
 
 

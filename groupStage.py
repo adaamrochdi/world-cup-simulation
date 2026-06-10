@@ -1,6 +1,6 @@
 import json
 import random
-from itertools import combinations
+from itertools import combinations, groupby
 from matchEngine import simulateMatch
 
 
@@ -42,29 +42,26 @@ def _simulateGroup(groupTeams):
             h2h[hn][an]["pts"] += 1
             h2h[an][hn]["pts"] += 1
 
+    return _rankGroup(names, stats, h2h), stats
+
+
+def _rankGroup(names, stats, h2h):
     def primaryKey(name):
         s = stats[name]
         return (-s["pts"], -s["gd"], -s["gf"])
 
-    sortedNames = sorted(names, key=primaryKey)
+    def h2hKey(name, tied):
+        h2hPts = sum(h2h[name][o]["pts"] for o in tied if o != name)
+        h2hGd = sum(h2h[name][o]["gd"] for o in tied if o != name)
+        return (-h2hPts, -h2hGd, random.random())
 
     ranked = []
-    i = 0
-    while i < len(sortedNames):
-        j = i + 1
-        while j < len(sortedNames) and primaryKey(sortedNames[j]) == primaryKey(sortedNames[i]):
-            j += 1
-        tied = sortedNames[i:j]
+    for _, group in groupby(sorted(names, key=primaryKey), key=primaryKey):
+        tied = list(group)
         if len(tied) > 1:
-            def h2hKey(name, tied=tied):
-                h2hPts = sum(h2h[name][o]["pts"] for o in tied if o != name)
-                h2hGd = sum(h2h[name][o]["gd"] for o in tied if o != name)
-                return (-h2hPts, -h2hGd, random.random())
-            tied.sort(key=h2hKey)
+            tied.sort(key=lambda name: h2hKey(name, tied))
         ranked.extend(tied)
-        i = j
-
-    return ranked, stats
+    return ranked
 
 
 def simulateGroupStage(teams):
